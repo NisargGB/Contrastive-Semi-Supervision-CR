@@ -2,7 +2,7 @@
 
 ## This repository implements the componenets required for our submission to MICCAI'21
 
-### Some filemaps - 
+### Some filemaps
 - attn_unet.py: Code for the backbone/baseline Attention unet
 - data_loader.py: Contains data generator for the celiac dataset
 - generate_pseudolabels.py: A utility file for generating and saving pseudolabels in case of very slow cpus that cant run on-the-fly
@@ -17,3 +17,7 @@
 - python 3.6+
 - Tensorflow-GPU 2.0+
 - Keras (compatible with the TF backend)
+
+### Note
+Some pretrained model weights are available [here](https://drive.google.com/drive/folders/1aYE_K2dWH_sGNYERMyBfoiPzXpfiH9J9?usp=sharing)
+Each file corresponds to the final weights for the model on that dataset which is used for segmentation. celiac_subset file are sample weights of model trained in supervised manner on a subset (50) of labelled samples only.
