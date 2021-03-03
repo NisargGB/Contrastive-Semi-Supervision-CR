@@ -11,7 +11,7 @@
 - model.py: Defines encoder, decoder, composite model
 - train.py: Running semi-supervised CL+CR training of the network. Change config variables at the beginning code and run it
 - utils.py: Some functional utilities
-- dataloadrs/data_generator.py: A comppletely modular implementation of celiac dataset generator. Easilty modifiable to other datasets
+- dataloaders/data_generator.py: A comppletely modular implementation of celiac dataset generator. Easilty modifiable to other datasets
 
 ### Requirements
 - python 3.6+
