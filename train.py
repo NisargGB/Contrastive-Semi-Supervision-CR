@@ -30,8 +30,12 @@ image_size = (320, 256)
 target_classes = ["Good Crypts", "Good Villi", "Epithelium", "Brunner's Gland"]
 lr = 1e-3
 epochs = 500
+aux_class = False
 
-num_inputs = 4
+# ADDS AN AUXILLIARY CLASS IN CASE OF SINGLE CLASS DATASETS
+if len(target_classes) == 1:
+    aux_class = True
+
 enc = encoder(multiplier=8, freeze_encoder=False, dropout_rate=0.0, prefix='enc')
 dec = decoder(len(target_classes), 8, False, 0.0, 'dec')
 model = CLCR_model_cl(image_size, enc, dec)
@@ -59,8 +63,8 @@ if not supInit:
     print("WARNING: Supervised model not initialised")
     exit
 
-data_gen = DataGenerator(image_folder, train_path, image_size, target_classes, batch_size, model=supModel, augment=True, S=S)
-valid_generator = DataGenerator(valid_path, None, image_size, target_classes, batch_size, model=supModel, augment=False, S=S)
+data_gen = DataGenerator(image_folder, train_path, image_size, target_classes, batch_size, model=supModel, augment=True, S=S, aux_class=aux_class)
+valid_generator = DataGenerator(valid_path, None, image_size, target_classes, batch_size, model=supModel, augment=False, S=S, aux_class=aux_class)
 callbacks = [ModelCheckpoint(model_path, save_weights_only=True),
             ReduceLROnPlateau(monitor='loss', factor=0.1, patience=15, verbose=1, min_lr=1e-6),
             EarlyStopping(monitor='loss', patience=30, restore_best_weights=False), 

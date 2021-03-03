@@ -12,7 +12,7 @@ import time
 
 
 class DataGenerator(Sequence):
-    def __init__(self, folder_path, labelled_path, image_size, target_classes, batch_size=4, model=None, augment=True, S=24):
+    def __init__(self, folder_path, labelled_path, image_size, target_classes, batch_size=4, model=None, augment=True, S=24, aux_class=False):
         """
         target classes can be a list from Good Crypts / Good Villi / Interpretable Region / Epithelium / Muscularis Mucosa
         mode should be one of 'seg', 'loc' or 'full'
@@ -36,6 +36,7 @@ class DataGenerator(Sequence):
         self.batch_size = batch_size
         self.augment = augment
         self.S = S
+        self.aux_class = aux_class
         print("Image count in {} path: {}".format(self.folder_path,len(self.image_ids)))
         self.on_epoch_end()
 
@@ -102,6 +103,7 @@ class DataGenerator(Sequence):
         masks = list(masks.values())
         masks = [np.array(m).T / 255. for m in masks]
         masks = np.stack(masks, axis=-1)
+
         return masks
 
         
@@ -231,6 +233,12 @@ class DataGenerator(Sequence):
             pseudolabels = np.squeeze(pseudolabels, 0)
         else:
             pseudolabels = np.zeros(img.shape)[0]
+        
+        # ADDING AUXILLIARY CLASS IN PSEUDOLABELS
+        if self.aux_class:
+            compliment_mask = np.clip(np.sum(pseudolabels, axis=-1), 0, 1)
+            compliment_mask = np.expand_dims(1 - compliment_mask, -1)
+            pseudolabels = np.concatenate(pseudolabels, compliment_mask, axis=-1)
         img = np.squeeze(img, 0)
         pseudolabels = (pseudolabels > 0.01)*1.
 
