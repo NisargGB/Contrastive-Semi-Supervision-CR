@@ -175,7 +175,6 @@ def magic():
                                                 dropout_rate=0.0)
     pred_model.load_weights(sys.argv[1], by_name=True)
     test_folders = [sys.argv[2]]
-    # pred_model.load_weights('/content/gdrive/My Drive/Study/BTP/Anti-celiac/weights_train_C-V-E-B-IR_focalloss_0.02_bifmse_1.0.h5', by_name=True)
     predictor = pred_model.predict_on_batch
 
     if float(sys.argv[3]) >= 0.:
