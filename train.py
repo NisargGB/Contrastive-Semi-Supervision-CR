@@ -16,13 +16,14 @@ tf.random.set_seed(100)
 np.random.seed(100)
 
 ## Path
-model_path = "Path here.h5" # Saving location
-log_path = "Path here"
-weights_paths = ["Path here"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
+model_path = "weights/temp.h5" # Saving location
+log_path = "logs/temp"
+weights_paths = ["D:/Master/Study/Semester8/BTP2/weights/celiac_weights_50subset.h5"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
+# weights_paths = ["Path here"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
 
-train_path = "Path here"
-valid_path = "Path here"
-image_folder = "Path here"
+train_path = "D:/Master/Study/Semester7/BTP1/Data/Train"
+valid_path = "D:/Master/Study/Semester7/BTP1/Data/Valid"
+image_folder = "D:/Master/Study/Semester7/BTP1/Data/unlabelled"
 
 batch_size = 1
 S = 96
@@ -38,7 +39,9 @@ if len(target_classes) == 1:
 
 enc = encoder(multiplier=8, freeze_encoder=False, dropout_rate=0.0, prefix='enc')
 dec = decoder(len(target_classes), 8, False, 0.0, 'dec')
-model = CLCR_model_cl(image_size, enc, dec)
+# A VARIABLE THAT HOLDS THE DISTORTION INTENSITY VALUE FOR CR
+intensity_var = tf.Variable(0.1, trainable=False, name='intensity', dtype=tf.float32)
+model = CLCR_model_cl(image_size, enc, dec, intensity_var)
 model.summary()
 
 cl_loss = CLCR_CL()
@@ -69,6 +72,7 @@ callbacks = [ModelCheckpoint(model_path, save_weights_only=True),
             ReduceLROnPlateau(monitor='loss', factor=0.1, patience=15, verbose=1, min_lr=1e-6),
             EarlyStopping(monitor='loss', patience=30, restore_best_weights=False), 
             TensorBoard(log_dir=log_path, update_freq='epoch', write_graph=False, profile_batch=0),
+            UpdateCRCallback(intensity_var)
 ]
 
 

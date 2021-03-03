@@ -171,13 +171,10 @@ def histogram_equalization(img):
 
 
 
-
-
-
-# class UpdateCRCallback(tf.keras.callbacks.Callback):
-#     def __init__(self, clcr_loss):
-#         super(UpdateCRCallback, self).__init__()
-#         self.clcr_loss = clcr_loss
+class UpdateCRCallback(tf.keras.callbacks.Callback):
+    def __init__(self, intensity_var):
+        super(UpdateCRCallback, self).__init__()
+        self.intensity = intensity_var
         
-#     def on_epoch_end(self, epoch, logs=None):
-#         self.clcr_loss.set_intensity(max(self.clcr_loss.intensity, logs['silhoutte']))
+    def on_epoch_end(self, epoch, logs=None):
+        tf.keras.backend.set_value(self.intensity, tf.constant((logs['emb_silhouette'] + 1) / 2))

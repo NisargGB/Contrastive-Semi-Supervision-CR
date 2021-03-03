@@ -5,15 +5,17 @@ import tensorflow as tf
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import Model
 from tensorflow.keras.backend import random_normal
+import tensorflow.keras.backend as K
 
 # NOTE: IMAGE CONVENTION IS (W, H, C)
 
 
 class FeaturePerturb(Layer):
-    def __init__(self, ):
+    def __init__(self, intensity_var):
         # Intensity will be updated when the silhouette coeffecient of clusters improvs during training
-        self.intensity = 0.1
+        # self.intensity = 0.1
         super(FeaturePerturb, self).__init__()
+        self.intensity_var = intensity_var
     
     def build(self, input_shape):
         self.dims = (1, int(input_shape[-3]), int(input_shape[-2]), int(input_shape[-1]))
@@ -21,7 +23,7 @@ class FeaturePerturb(Layer):
 
     def call(self, input):
         # print(input.shape)
-        rand_num = random_normal(self.dims, mean=0.0, stddev=self.intensity, dtype=tf.float32)
+        rand_num = random_normal(self.dims, mean=0.0, stddev=K.get_value(self.intensity_var), dtype=tf.float32)
         return input + rand_num
 
         
@@ -136,7 +138,7 @@ def decoder(out_channels, multiplier, freeze_decoder, dropout_rate, prefix):
     return decoder
 
 
-def CLCR_model_cl(img_shape, encoder, decoder, num_consistents=2):
+def CLCR_model_cl(img_shape, encoder, decoder, intensity_var, num_consistents=2):
     # encode the patches with a backbone encoder
     inp = Input((64, 64, 3))
     _, _, _, _, feats = encoder(inp)
@@ -146,7 +148,7 @@ def CLCR_model_cl(img_shape, encoder, decoder, num_consistents=2):
     # Consistency regularization of image level inputs
     img_inp = Input((img_shape[0], img_shape[1], 3))
     img_feats = encoder(img_inp)
-    img_feats_rand = [FeaturePerturb()(img_feat) for img_feat in img_feats]
+    img_feats_rand = [FeaturePerturb(intensity_var)(img_feat) for img_feat in img_feats]
     # mask_out = decoder(img_feats)
     mask_out_rand = decoder(img_feats_rand)
 
