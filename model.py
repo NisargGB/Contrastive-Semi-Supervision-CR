@@ -152,22 +152,3 @@ def CLCR_model_cl(img_shape, encoder, decoder, num_consistents=2):
 
     model = Model(inputs=[inp, img_inp], outputs=[emb, mask_out_rand], name='CLCR_encoder_cl')
     return model
-
-# def CLCR_model(encoder, decoder, num_consistents=2):
-#     inp = []
-#     for i in range(num_consistents + 1):
-#         inp.append(Input((None, None, 3)))
-    
-#     x1, x2, x3, x4, x5 = [], [], [], [], []
-#     for i in range(num_consistents + 1):
-#         xi1, xi2, xi3, xi4, xi5 = encoder(inp[i])
-#         x1.append(xi1)
-#         x2.append(xi2)
-#         x3.append(xi3)
-#         x4.append(xi4)
-#         x5.append(xi5)
-    
-#     cons_outp = []
-#     for i in range(1, num_consistents + 1):
-#         recons = decoder([x1[i], x2[i], x3[i], x4[i], x5[i]])
-#         cons_outp.append(recons)

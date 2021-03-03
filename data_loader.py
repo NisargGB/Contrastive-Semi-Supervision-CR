@@ -226,9 +226,11 @@ class DataGenerator(Sequence):
         img = np.expand_dims(img, 0)
         if self.is_labelled[index]:
             pseudolabels = self.load_annotations(index)
-        else:
+        elif self.model is not None:
             pseudolabels = self.model.predict_on_batch(img)
             pseudolabels = np.squeeze(pseudolabels, 0)
+        else:
+            pseudolabels = np.zeros(img.shape)[0]
         img = np.squeeze(img, 0)
         pseudolabels = (pseudolabels > 0.01)*1.
 
@@ -301,17 +303,11 @@ if __name__ == "__main__":
     np.random.seed(0)
     random.seed(0)
     debug = True
-    # train_path = "/media/nisarg/DATA/Master/Study/Semester7/BTP1/Magic/Data/Train"
-    # val_path = "/media/nisarg/DATA/Master/Study/Semester7/BTP1/Magic/Data/Valid"
-    train_path = "D:/Master/Study/Semester7/BTP1/Data/Train"
-    val_path = "D:/Master/Study/Semester7/BTP1/Data/Valid"
+    train_path = "Path here"
+    val_path = "Path here"
 
     img_size = (320, 256)
     # img_size = (2448, 1920)
     batch_size = 4
     # target_classes = ["Good Crypts"  , "Interpretable Region"]
     target_classes = ["Good Crypts", "Good Villi", "Epithelium", "Brunner's Gland", "Interpretable Region"]
-
-    data_gen = DataGenerator(image_folder, image_size, batch_size, model=None, augment=True, S=S)
-    # val_gen = DataGenerator(val_path, img_size, batch_size, target_classes, augment=False)
-    inps, tgts = train_gen.__getitem__(1)

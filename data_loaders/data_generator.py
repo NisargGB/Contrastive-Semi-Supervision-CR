@@ -623,10 +623,8 @@ if __name__ == "__main__":
     np.random.seed(0)
     random.seed(0)
     debug = True
-    # train_path = "/media/nisarg/DATA/Master/Study/Semester7/BTP1/Magic/Data/Train"
-    # val_path = "/media/nisarg/DATA/Master/Study/Semester7/BTP1/Magic/Data/Valid"
-    train_path = "D:/Master/Study/Semester7/BTP1/Data/Train"
-    val_path = "D:/Master/Study/Semester7/BTP1/Data/Valid"
+    train_path = "Path here"
+    val_path = "Path here"
 
     img_size = (640, 512)
     # img_size = (2448, 1920)

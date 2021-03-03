@@ -1,5 +1,5 @@
 """
-Attention UNet architecture for multitask learning - Segmentatoin & Localization
+Attention UNet architecture
 """
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import Model

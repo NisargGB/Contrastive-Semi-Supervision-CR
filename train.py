@@ -1,8 +1,6 @@
-"""Downstream finetuning & comparison with fully supervised training"""
 import os
 from tqdm import tqdm
 from PIL import ImageEnhance, Image
-"""data_generator.py has dataloader for finetuning"""
 from data_loader import DataGenerator
 from model import encoder, CLCR_model_cl, decoder
 import time
@@ -18,13 +16,13 @@ tf.random.set_seed(100)
 np.random.seed(100)
 
 ## Path
-model_path = './weights/CLCR_model.h5' # Saving location
-log_path = './logs/CLCR_model'
-weights_paths = ['D:/Master/Study/Semester8/BTP2/Dump/trainedOn50.h5']   # Weight path for trainOn50.h5
+model_path = "Path here.h5" # Saving location
+log_path = "Path here"
+weights_paths = ["Path here"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
 
-train_path = "D:/Master/Study/Semester7/BTP1/Data/Train"
-valid_path = "D:/Master/Study/Semester7/BTP1/Data/Valid"
-image_folder = "D:/Master/Study/Semester7/BTP1/Data/unlabelled"
+train_path = "Path here"
+valid_path = "Path here"
+image_folder = "Path here"
 
 batch_size = 1
 S = 96
