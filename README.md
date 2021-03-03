@@ -1,6 +1,6 @@
 # Contrastive Semi-Supervised Learning for Medical Image Segmentation
 
-## This repository implements the componenets required for our submission to MICCAI'21
+## This repository implements the components required for our submission to MICCAI'21
 
 ### Some filemaps
 - attn_unet.py: Code for the backbone/baseline Attention unet
