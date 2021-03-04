@@ -19,5 +19,5 @@
 - Keras (compatible with the TF backend)
 
 ### Note
-Some training images from our duodenal histopathology dataset some pretrained model weights are available [here](https://drive.google.com/drive/folders/1aYE_K2dWH_sGNYERMyBfoiPzXpfiH9J9?usp=sharing)
+Some training images from our duodenal histopathology dataset some pretrained model weights are available [here](https://drive.google.com/drive/folders/1aYE_K2dWH_sGNYERMyBfoiPzXpfiH9J9?usp=sharing).
 Each file corresponds to the final weights for the model on that dataset which is used for segmentation. celiac_subset file are sample weights of model trained in supervised manner on a subset (50) of labelled samples only.
