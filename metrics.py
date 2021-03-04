@@ -1,4 +1,5 @@
 from PIL import Image
+from tensorflow.python.keras.losses import categorical_crossentropy
 from utils import draw_boxes
 import numpy as np
 import tensorflow as tf
@@ -52,12 +53,9 @@ def bce_dice_loss(y_true, y_pred):
     return 0.2 * binary_crossentropy(y_true, y_pred) + 0.8 * dice_loss(y_true, y_pred)
 
 def focal_loss(y_true, y_pred):
-    y_pred = y_pred[..., :5]
-
+    # y_pred = y_pred[..., :5]
     alpha = 0.25
     gamma = 2
-    # print(y_true[..., -1].shape)
-    # print(y_pred[..., -1].shape)
     y_true = tf.reshape(y_true[..., -1], [-1, y_pred.shape[1]*y_pred.shape[2]])
     y_pred = tf.reshape(y_pred[..., -1], [-1, y_pred.shape[1]*y_pred.shape[2]])
 
@@ -71,6 +69,18 @@ def focal_loss(y_true, y_pred):
     loss = focal_loss_with_logits(logits=logits, targets=y_true, alpha=alpha, gamma=gamma, y_pred=y_pred)
     # or reduce_sum and/or axis=-1
     return tf.reduce_mean(loss)
+
+
+# def crossentropy_loss(num_classes):
+#     def loss_func(y_true, y_pred):
+#         y_true = tf.cast(y_true, tf.float32)
+#         y_pred = tf.cast(y_pred, tf.float32)
+#         y_true = tf.reshape(y_true, [-1, num_classes])
+#         y_pred = tf.reshape(y_pred, [-1, num_classes])
+#         loss = categorical_crossentropy(y_true, y_pred)
+#         return loss
+#     return loss_func
+
 
 def tversky(y_true, y_pred):
     y_true_f = tf.cast(y_true, tf.float32)

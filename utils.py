@@ -170,7 +170,6 @@ def histogram_equalization(img):
     return img
 
 
-
 class UpdateCRCallback(tf.keras.callbacks.Callback):
     def __init__(self, intensity_var):
         super(UpdateCRCallback, self).__init__()

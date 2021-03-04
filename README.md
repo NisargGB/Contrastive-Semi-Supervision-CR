@@ -9,7 +9,7 @@
 - inference.py: Run inference on a test set of images
 - metrics.py: Contains loss functions and metrics to be monitored
 - model.py: Defines encoder, decoder, composite model
-- train.py: Running semi-supervised CL+CR training of the network. Change config variables at the beginning code and run it
+- train.py: Running semi-supervised CL+CR training of the network. Change config variables at the beginning code and run it (python train.py)
 - utils.py: Some functional utilities
 - dataloaders/data_generator.py: A completely modular implementation of celiac dataset generator. Easilty modifiable to other datasets
 

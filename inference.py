@@ -1,8 +1,8 @@
 import os
 #os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 # os.environ["CUDA_VISIBLE_DEVICES"]="0"
-from data_generator import DataGenerator
-from model import attention_unet_resnet50, attention_unet_refined
+from data_loader import DataGenerator
+from attn_unet import attention_unet_refined
 from metrics import *
 import sys
 import time
@@ -142,14 +142,14 @@ def magic():
     #                                     encoder_weights=None, 
     #                                     freeze_decoder=True, 
     #                                     dropout_rate=0.0)
-    _, pred_model, _, _, _ = attention_unet_refined(test_image_size, 
-                                                3, 
-                                                len(target_classes), 
-                                                multiplier=10, 
-                                                freeze_encoder=True, 
-                                                freeze_decoder=True, 
-                                                use_constraints = False, 
-                                                dropout_rate=0.0)
+    pred_model = attention_unet_refined(test_image_size, 
+                                        3, 
+                                        len(target_classes), 
+                                        multiplier=10, 
+                                        freeze_encoder=True, 
+                                        freeze_decoder=True, 
+                                        use_constraints = False, 
+                                        dropout_rate=0.0)
     test_folders = [sys.argv[2]]
     pred_model.load_weights(sys.argv[1], by_name=True)
     predictor = pred_model.predict_on_batch
