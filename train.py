@@ -15,19 +15,13 @@ from tensorflow.keras.utils import plot_model
 # tf.random.set_seed(100)
 # np.random.seed(100)
 
-## Path
+## Config
 model_path = "weights/temp.h5" # Saving location
 log_path = "logs/temp"
-# weights_paths = ["Path here"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
-weights_paths = ["D:/Master/Study/Semester8/BTP2/weights/celiac_weights_50subset.h5"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
-
-# train_path = "Path here"
-# valid_path = "Path here"
-# image_folder = "Path here"
-train_path = "D:/Master/Study/Semester7/BTP1/Data/Train"
-valid_path = "D:/Master/Study/Semester7/BTP1/Data/Valid"
-image_folder = "D:/Master/Study/Semester7/BTP1/Data/unlabelled"
-
+weights_paths = ["Path here"]   # Weight path for trainOn50.h5 (or loading location for resuming training)
+train_path = "Path here"
+valid_path = "Path here"
+image_folder = "Path here"
 batch_size = 8
 S = 816
 image_size = (320, 256)
